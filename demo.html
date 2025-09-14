@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Mock Master - Demo Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .demo-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .demo-section h3 {
+            color: #555;
+            margin-top: 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎭 API Mock Master - Demo Page</h1>
+        
+        <div class="info">
+            <strong>Hướng dẫn sử dụng:</strong><br>
+            1. Cài đặt extension "API Mock Master"<br>
+            2. Mở extension và tạo override cho các API dưới đây<br>
+            3. Nhấn các nút test để xem kết quả<br>
+            4. Extension sẽ can thiệp vào request và trả về data theo ý bạn
+        </div>
+
+        <div class="demo-section">
+            <h3>📡 Test API Calls</h3>
+            <p>Những API này sẽ được extension can thiệp và trả về data tùy chỉnh:</p>
+            
+            <button onclick="testUserAPI()">Test Users API (GET)</button>
+            <button onclick="testPostAPI()">Test Posts API (POST)</button>
+            <button onclick="testProductsAPI()">Test Products API (GET)</button>
+            <button onclick="testErrorAPI()">Test Error API (GET)</button>
+            
+            <div id="api-result" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🔧 Extension Configuration Examples</h3>
+            <p>Ví dụ cấu hình override trong extension:</p>
+            
+            <h4>1. Custom Response cho Users API:</h4>
+            <ul>
+                <li><strong>URL ghi đè:</strong> <code>https://jsonplaceholder.typicode.com/users</code></li>
+                <li><strong>Method:</strong> GET</li>
+                <li><strong>Loại Override:</strong> Custom Response</li>
+                <li><strong>Status Code:</strong> 200</li>
+                <li><strong>Response Body:</strong></li>
+            </ul>
+            <pre style="background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto;">
+{
+  "users": [
+    {"id": 1, "name": "Mock User 1", "email": "mock1@example.com"},
+    {"id": 2, "name": "Mock User 2", "email": "mock2@example.com"}
+  ],
+  "message": "This is mocked data from API Mock Master!"
+}</pre>
+
+            <h4>2. Redirect to Localhost cho Posts API:</h4>
+            <ul>
+                <li><strong>URL ghi đè:</strong> <code>https://jsonplaceholder.typicode.com/posts</code></li>
+                <li><strong>Method:</strong> POST</li>
+                <li><strong>Loại Override:</strong> Redirect to Localhost</li>
+                <li><strong>Target URL:</strong> <code>http://localhost:3000/api/posts</code></li>
+                <li><strong>Request Headers:</strong> <code>{"Authorization": "Bearer token123"}</code></li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h3>📊 Console Logs</h3>
+            <p>Mở Developer Tools (F12) để xem logs chi tiết của extension.</p>
+            <button onclick="clearConsole()">Clear Console</button>
+        </div>
+    </div>
+
+    <script>
+        function showResult(elementId, data, isError = false) {
+            const resultDiv = document.getElementById(elementId);
+            resultDiv.style.display = 'block';
+            resultDiv.className = `result ${isError ? 'error' : 'success'}`;
+            resultDiv.textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function testUserAPI() {
+            try {
+                console.log('Testing Users API...');
+                const response = await fetch('https://jsonplaceholder.typicode.com/users');
+                const data = await response.json();
+                showResult('api-result', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    data: data
+                });
+            } catch (error) {
+                showResult('api-result', { error: error.message }, true);
+            }
+        }
+
+        async function testPostAPI() {
+            try {
+                console.log('Testing Posts API...');
+                const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title: 'Test Post',
+                        body: 'This is a test post',
+                        userId: 1
+                    })
+                });
+                const data = await response.json();
+                showResult('api-result', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    data: data
+                });
+            } catch (error) {
+                showResult('api-result', { error: error.message }, true);
+            }
+        }
+
+        async function testProductsAPI() {
+            try {
+                console.log('Testing Products API...');
+                const response = await fetch('https://fakestoreapi.com/products');
+                const data = await response.json();
+                showResult('api-result', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    data: data.slice(0, 3) // Show only first 3 products
+                });
+            } catch (error) {
+                showResult('api-result', { error: error.message }, true);
+            }
+        }
+
+        async function testErrorAPI() {
+            try {
+                console.log('Testing Error API...');
+                const response = await fetch('https://httpstat.us/500');
+                const data = await response.text();
+                showResult('api-result', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    data: data
+                });
+            } catch (error) {
+                showResult('api-result', { error: error.message }, true);
+            }
+        }
+
+        function clearConsole() {
+            console.clear();
+            console.log('Console cleared!');
+        }
+
+        // Log when page loads
+        console.log('🎭 API Mock Master Demo Page loaded!');
+        console.log('Ready to test API overrides with the extension.');
+    </script>
+</body>
+</html>

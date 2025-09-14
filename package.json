@@ -1,0 +1,30 @@
+{
+  "name": "api-mock-master",
+  "version": "1.0.0",
+  "description": "Professional Chrome Extension để mock API và test các endpoint với response tùy chỉnh",
+  "main": "background.js",
+  "scripts": {
+    "build": "echo 'Extension is ready to load in Chrome'",
+    "test": "echo 'Open chrome://extensions/ and load unpacked extension'",
+    "icons": "open create_icons.html"
+  },
+  "keywords": [
+    "chrome-extension",
+    "api-testing",
+    "api-mocking",
+    "development-tools",
+    "mock-api",
+    "api-mock-master"
+  ],
+  "author": "API Mock Master",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}

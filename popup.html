@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Mock Master</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 API Mock Master</h1>
+            <div class="status-indicator">
+                <span id="status" class="status-inactive">Tắt</span>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="overrides">API Overrides</button>
+            <button class="tab-button" data-tab="settings">Cài đặt</button>
+        </div>
+
+        <!-- Overrides Tab -->
+        <div id="overrides-tab" class="tab-content active">
+            <div class="section-header">
+                <h2>🎯 API Override & Proxy</h2>
+                <button id="add-override" class="btn btn-primary">+ Thêm Override</button>
+            </div>
+
+            <div class="info-box">
+                <h3>🎯 Mục đích:</h3>
+                <p>Ghi đè API với response tùy chỉnh hoặc redirect về localhost</p>
+                <p><strong>Ví dụ:</strong> nghiapd.com/api/list_user → Custom response hoặc localhost:3000/api/list_user</p>
+            </div>
+
+            <div id="overrides-list" class="overrides-list">
+                <!-- Overrides sẽ được load từ storage -->
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings-tab" class="tab-content">
+            <div class="section-header">
+                <h2>Cài đặt</h2>
+            </div>
+            
+            <div class="settings-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="enable-override">
+                    <span class="checkmark"></span>
+                    Bật ghi đè API
+                </label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="show-notifications">
+                    <span class="checkmark"></span>
+                    Hiển thị thông báo khi API được ghi đè
+                </label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="log-requests">
+                    <span class="checkmark"></span>
+                    Ghi log các request
+                </label>
+            </div>
+
+            <div class="settings-group">
+                <button id="export-config" class="btn btn-secondary">Xuất cấu hình</button>
+                <button id="import-config" class="btn btn-secondary">Nhập cấu hình</button>
+                <input type="file" id="import-file" accept=".json" style="display: none;">
+            </div>
+
+            <div class="settings-group">
+                <button id="clear-all" class="btn btn-danger">Xóa tất cả</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Override Modal -->
+    <div id="override-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="override-modal-title">Thêm API Override</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="override-form">
+                    <div class="form-group">
+                        <label for="override-name">Tên Override:</label>
+                        <input type="text" id="override-name" placeholder="Users API Override" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="override-url">URL ghi đè:</label>
+                        <input type="text" id="override-url" placeholder="https://nghiapd.com/api/list_user" required>
+                        <small>URL nào cần ghi đè</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="override-method">HTTP Method:</label>
+                        <select id="override-method">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="DELETE">DELETE</option>
+                            <option value="PATCH">PATCH</option>
+                            <option value="*">Tất cả</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="override-type">Loại Override:</label>
+                        <select id="override-type">
+                            <option value="custom">Custom Response</option>
+                            <option value="proxy">Redirect to Localhost</option>
+                        </select>
+                    </div>
+
+                    <!-- Custom Response Section -->
+                    <div id="custom-response-section">
+                        <div class="form-group">
+                            <label for="override-status">Status Code:</label>
+                            <input type="number" id="override-status" value="200" min="100" max="599">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="override-headers">Response Headers (JSON):</label>
+                            <textarea id="override-headers" rows="3" placeholder='{"Content-Type": "application/json"}'></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="override-body">Custom Response Body:</label>
+                            <textarea id="override-body" rows="8" placeholder='{"users": [{"id": 1, "name": "Test User"}]}'></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Proxy Section -->
+                    <div id="proxy-section" style="display: none;">
+                        <div class="form-group">
+                            <label for="override-target-url">Target URL (Localhost):</label>
+                            <input type="text" id="override-target-url" placeholder="http://localhost:3000/api/list_user">
+                            <small>URL localhost mà bạn muốn redirect tới</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="override-request-headers">Request Headers (JSON):</label>
+                            <textarea id="override-request-headers" rows="3" placeholder='{"Authorization": "Bearer token"}'></textarea>
+                            <small>Headers sẽ được thêm vào request tới localhost</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="override-request-body">Request Body (JSON):</label>
+                            <textarea id="override-request-body" rows="4" placeholder='{"userId": 123, "action": "getUsers"}'></textarea>
+                            <small>Dữ liệu truyền lên localhost</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="override-delay">Delay (ms):</label>
+                        <input type="number" id="override-delay" value="0" min="0" max="10000">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="override-enabled" checked>
+                            <span class="checkmark"></span>
+                            Kích hoạt override này
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel-override">Hủy</button>
+                <button type="button" class="btn btn-primary" id="save-override">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
