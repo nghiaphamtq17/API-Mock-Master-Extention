@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "API Mock Master",
-  "version": "1.0",
-  "description": "Professional API mocking and testing tool - Mock any API, test everything",
+  "version": "1.0.0",
+  "description": "Professional Chrome Extension to redirect APIs from different domains to localhost and override APIs with custom responses",
   "permissions": [
     "storage",
     "activeTab",

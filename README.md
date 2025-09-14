@@ -1,79 +1,94 @@
 # 🎭 API Mock Master
 
-Professional Chrome Extension để redirect API từ domain khác về localhost và override API với response tùy chỉnh.
+Professional Chrome Extension to redirect APIs from different domains to localhost and override APIs with custom responses.
 
-## 📋 Mục lục
+## 📋 Table of Contents
 
-- [Tính năng](#-tính-năng)
-- [Cài đặt](#-cài-đặt)
-- [Sử dụng](#-sử-dụng)
+- [Features](#-features)
+- [Installation](#-installation)
+- [Usage](#-usage)
 - [API Proxy & Redirect](#-api-proxy--redirect)
 - [Debug & Monitoring](#-debug--monitoring)
 - [Troubleshooting](#-troubleshooting)
-- [Cấu trúc file](#-cấu-trúc-file)
+- [File Structure](#-file-structure)
 
-## ✨ Tính năng
+## ✨ Features
 
-- ✅ **API Proxy & Redirect**: Chuyển hướng API từ domain khác về localhost
-- ✅ **Custom Request Parameters**: Tùy chỉnh headers, body, query params
-- ✅ **Custom Response**: Transform response từ localhost
-- ✅ **Override API hiện có**: Ghi đè API với response tùy chỉnh
-- ✅ **Hỗ trợ tất cả HTTP methods**: GET, POST, PUT, DELETE, PATCH
-- ✅ **Request/Response Transform**: JavaScript functions để transform dữ liệu
-- ✅ **Delay response**: Thêm độ trễ để test loading states
-- ✅ **Wildcard URL matching**: Hỗ trợ pattern matching với `*`
-- ✅ **Import/Export cấu hình**: Chia sẻ và backup cấu hình
-- ✅ **Logging**: Ghi log các request được proxy
-- ✅ **Giao diện thân thiện**: UI đẹp và dễ sử dụng
+- ✅ **API Proxy & Redirect**: Redirect APIs from different domains to localhost
+- ✅ **Custom Request Parameters**: Customize headers, body, query params
+- ✅ **Custom Response**: Transform responses from localhost
+- ✅ **Override Existing APIs**: Override APIs with custom responses
+- ✅ **Support All HTTP Methods**: GET, POST, PUT, DELETE, PATCH
+- ✅ **Request/Response Transform**: JavaScript functions to transform data
+- ✅ **Delay Response**: Add delays to test loading states
+- ✅ **Wildcard URL Matching**: Support pattern matching with `*`
+- ✅ **Import/Export Configuration**: Share and backup configurations
+- ✅ **Logging**: Log proxied requests
+- ✅ **User-Friendly Interface**: Beautiful and easy-to-use UI
 
-## 🚀 Cài đặt
+## 🚀 Installation
 
-### Bước 1: Cài đặt Extension
+### Method 1: Install from Chrome Web Store (Recommended)
 
-1. Mở Chrome và vào `chrome://extensions/`
-2. Bật **"Developer mode"** ở góc trên bên phải
-3. Nhấn **"Load unpacked"**
-4. Chọn thư mục `API Mock Master` (thư mục chứa extension này)
-5. Extension sẽ xuất hiện trong toolbar với icon 🎭
+1. Visit [Chrome Web Store](https://chrome.google.com/webstore) 
+2. Search for "API Mock Master"
+3. Click "Add to Chrome"
+4. Confirm installation
 
-### Bước 2: Tạo icon cho extension (tùy chọn)
+### Method 2: Manual Installation (Developer Mode)
 
-1. Mở file `create_icons.html` trong browser
-2. Các icon sẽ được tự động download
-3. Copy các file `icon16.png`, `icon48.png`, `icon128.png` vào thư mục `icons/`
+#### Step 1: Download Extension
+- **From GitHub**: Download `api-mock-master-extension.zip` from [Releases](https://github.com/your-username/api-mock-master/releases)
+- **From Source**: Clone this repository
 
-### Bước 3: Sử dụng
+#### Step 2: Install Extension
 
-1. Nhấn vào icon extension trong toolbar
-2. Chuyển sang tab **"Cài đặt"**
-3. Bật **"Bật ghi đè API"**
-4. Chuyển sang tab **"API Proxy"**
-5. Nhấn **"+ Thêm Proxy"** để bắt đầu
+1. Open Chrome and go to `chrome://extensions/`
+2. Enable **"Developer mode"** in the top right corner
+3. Click **"Load unpacked"**
+4. Select the `API Mock Master` folder (folder containing this extension)
+5. Extension will appear in toolbar with 🎭 icon
 
-## 🛠️ Sử dụng
+> 📋 **Detailed Instructions**: See [INSTALL.md](INSTALL.md)
 
-### 1. Thêm Proxy
+### Step 3: Create Extension Icons (Optional)
 
-1. Nhấn **"+ Thêm Proxy"**
-2. Điền thông tin:
-   - **Tên Proxy**: Tên mô tả cho proxy
-   - **Source URL**: URL gốc mà bạn muốn redirect (ví dụ: `https://nghiapd.com/api/list_user`)
-   - **Target URL**: URL localhost đích (ví dụ: `http://localhost:3000/api/list_user`)
-   - **HTTP Method**: Chọn method hoặc "Tất cả"
-   - **Custom Headers**: JSON object chứa headers tùy chỉnh
-   - **Request Transform**: JavaScript function để transform request
-   - **Response Transform**: JavaScript function để transform response
-   - **Delay**: Thời gian trễ (ms)
-   - **Kích hoạt**: Bật/tắt proxy
+1. Open `create_icons.html` in browser
+2. Icons will be automatically downloaded
+3. Copy `icon16.png`, `icon48.png`, `icon128.png` files to `icons/` folder
 
-### 2. Ví dụ cấu hình
+### Step 4: Usage
+
+1. Click the extension icon in toolbar
+2. Switch to **"Settings"** tab
+3. Enable **"Enable API Override"**
+4. Switch to **"API Proxy"** tab
+5. Click **"+ Add Proxy"** to get started
+
+## 🛠️ Usage
+
+### 1. Add Proxy
+
+1. Click **"+ Add Proxy"**
+2. Fill in the information:
+   - **Proxy Name**: Descriptive name for the proxy
+   - **Source URL**: Original URL you want to redirect (e.g., `https://api.example.com/users`)
+   - **Target URL**: Target localhost URL (e.g., `http://localhost:3000/users`)
+   - **HTTP Method**: Select method or "All"
+   - **Custom Headers**: JSON object containing custom headers
+   - **Request Transform**: JavaScript function to transform request
+   - **Response Transform**: JavaScript function to transform response
+   - **Delay**: Delay time (ms)
+   - **Enable**: Turn proxy on/off
+
+### 2. Configuration Examples
 
 #### Basic Proxy:
 ```json
 {
   "name": "Users API Proxy",
-  "sourceUrl": "https://nghiapd.com/api/list_user",
-  "targetUrl": "http://localhost:3000/api/list_user",
+  "sourceUrl": "https://api.example.com/users",
+  "targetUrl": "http://localhost:3000/users",
   "method": "GET",
   "headers": {
     "Authorization": "Bearer your-token"
@@ -82,7 +97,7 @@ Professional Chrome Extension để redirect API từ domain khác về localhos
 }
 ```
 
-#### Proxy với Transform:
+#### Proxy with Transform:
 ```json
 {
   "name": "Data Transform Proxy",
@@ -98,53 +113,53 @@ Professional Chrome Extension để redirect API từ domain khác về localhos
 }
 ```
 
-### 3. Cài đặt
+### 3. Settings
 
-- **Bật ghi đè API**: Kích hoạt/tắt toàn bộ chức năng proxy
-- **Hiển thị thông báo**: Thông báo khi API được proxy
-- **Ghi log**: Ghi log các request trong console
+- **Enable API Override**: Enable/disable entire proxy functionality
+- **Show Notifications**: Notify when API is proxied
+- **Logging**: Log requests in console
 
 ### 4. Import/Export
 
-- **Xuất cấu hình**: Lưu tất cả proxies và settings ra file JSON
-- **Nhập cấu hình**: Load cấu hình từ file JSON
-- **Xóa tất cả**: Reset về trạng thái ban đầu
+- **Export Configuration**: Save all proxies and settings to JSON file
+- **Import Configuration**: Load configuration from JSON file
+- **Clear All**: Reset to initial state
 
 ## 🔄 API Proxy & Redirect
 
-### Mục đích sử dụng
+### Use Cases
 
-#### Ví dụ thực tế:
-- **Production API**: `https://nghiapd.com/api/list_user`
-- **Local API**: `http://localhost:3000/api/list_user`
-- **Kết quả**: Khi app gọi nghiapd.com → tự động redirect về localhost:3000
+#### Real-world Example:
+- **Production API**: `https://api.example.com/users`
+- **Local API**: `http://localhost:3000/users`
+- **Result**: When app calls api.example.com → automatically redirects to localhost:3000
 
-### 🚀 Cách sử dụng Proxy
+### 🚀 How to Use Proxy
 
-#### Bước 1: Tạo Proxy
-1. Mở extension **API Mock Master**
-2. Chuyển sang tab **"API Proxy"**
-3. Nhấn **"+ Thêm Proxy"**
+#### Step 1: Create Proxy
+1. Open **API Mock Master** extension
+2. Switch to **"API Proxy"** tab
+3. Click **"+ Add Proxy"**
 
-#### Bước 2: Cấu hình Proxy
+#### Step 2: Configure Proxy
 ```
-Tên Proxy: Users API Proxy
-Source URL: https://nghiapd.com/api/list_user
-Target URL: http://localhost:3000/api/list_user
+Proxy Name: Users API Proxy
+Source URL: https://api.example.com/users
+Target URL: http://localhost:3000/users
 Method: GET
 Headers: {"Authorization": "Bearer your-token"}
 Delay: 0ms
 ```
 
-#### Bước 3: Kích hoạt
-1. Bật **"Kích hoạt proxy này"**
-2. Nhấn **"Lưu"**
-3. Bật **"Bật ghi đè API"** trong Settings
+#### Step 3: Activate
+1. Enable **"Enable this proxy"**
+2. Click **"Save"**
+3. Enable **"Enable API Override"** in Settings
 
-### 🛠️ Tính năng nâng cao Proxy
+### 🛠️ Advanced Proxy Features
 
 #### 1. Custom Headers
-Thêm headers tùy chỉnh cho request tới target URL:
+Add custom headers for requests to target URL:
 ```json
 {
   "Authorization": "Bearer your-token",
@@ -154,7 +169,7 @@ Thêm headers tùy chỉnh cho request tới target URL:
 ```
 
 #### 2. Request Transform
-Transform dữ liệu request trước khi gửi tới target:
+Transform request data before sending to target:
 ```javascript
 function transformRequest(data) {
     // data.url, data.method, data.headers, data.body
@@ -165,7 +180,7 @@ function transformRequest(data) {
 ```
 
 #### 3. Response Transform
-Transform response trước khi trả về:
+Transform response before returning:
 ```javascript
 function transformResponse(data) {
     // data.status, data.headers, data.body
@@ -176,29 +191,29 @@ function transformResponse(data) {
 }
 ```
 
-### 📋 Ví dụ Proxy thực tế
+### 📋 Real-world Proxy Examples
 
-#### Ví dụ 1: Basic Proxy
+#### Example 1: Basic Proxy
 ```
-Tên: Basic User API
+Name: Basic User API
 Source: https://api.example.com/users
 Target: http://localhost:3000/users
 Method: GET
 Headers: {}
 ```
 
-#### Ví dụ 2: Auth Proxy
+#### Example 2: Auth Proxy
 ```
-Tên: Auth API Proxy
+Name: Auth API Proxy
 Source: https://api.example.com/auth/login
 Target: http://localhost:3000/auth/login
 Method: POST
 Headers: {"Content-Type": "application/json"}
 ```
 
-#### Ví dụ 3: Complex Transform
+#### Example 3: Complex Transform
 ```
-Tên: Data Transform Proxy
+Name: Data Transform Proxy
 Source: https://api.example.com/data
 Target: http://localhost:3000/data
 
@@ -217,7 +232,7 @@ function transformResponse(data) {
 }
 ```
 
-### 🔧 Workflow Development
+### 🔧 Development Workflow
 
 #### 1. Setup Local Server
 ```bash
@@ -227,61 +242,61 @@ npm start
 ```
 
 #### 2. Configure Proxy
-- Tạo proxy cho từng API endpoint
-- Test với Postman hoặc browser
-- Điều chỉnh transform functions nếu cần
+- Create proxy for each API endpoint
+- Test with Postman or browser
+- Adjust transform functions if needed
 
 #### 3. Development
-- App vẫn gọi production URLs
-- Extension tự động redirect về localhost
-- Thay đổi local code → test ngay
+- App still calls production URLs
+- Extension automatically redirects to localhost
+- Change local code → test immediately
 
 #### 4. Production
-- Tắt extension hoặc disable proxies
-- App gọi production APIs bình thường
+- Disable extension or disable proxies
+- App calls production APIs normally
 
 ## 🔍 Debug & Monitoring
 
 ### Console API
-Extension cung cấp API debugging trong console:
+Extension provides debugging API in console:
 
 ```javascript
-// Xem tất cả proxies
+// View all proxies
 window.apiOverride.getProxies()
 
-// Test proxy cho một URL
+// Test proxy for a URL
 window.apiOverride.testProxy('https://api.example.com/users', 'GET')
 ```
 
 ### Network Monitoring
-- Request sẽ hiển thị với source URL
-- Response sẽ là data từ target URL
-- Headers sẽ được merge và transform
+- Requests will show with source URL
+- Response will be data from target URL
+- Headers will be merged and transformed
 
 ## 🚨 Troubleshooting
 
-### Extension không hoạt động:
-1. Kiểm tra extension đã được enable
-2. Kiểm tra "Bật ghi đè API" trong settings
-3. Refresh trang web sau khi thay đổi cấu hình
-4. Kiểm tra console để xem lỗi
+### Extension not working:
+1. Check if extension is enabled
+2. Check "Enable API Override" in settings
+3. Refresh webpage after changing configuration
+4. Check console for errors
 
-### Proxy không hoạt động:
-1. Kiểm tra local server có đang chạy không
-2. Kiểm tra CORS settings trên local server
-3. Kiểm tra transform functions có lỗi không
-4. Kiểm tra network tab để xem request flow
+### Proxy not working:
+1. Check if local server is running
+2. Check CORS settings on local server
+3. Check if transform functions have errors
+4. Check network tab to see request flow
 
 ### CORS Issues:
-- Local server cần enable CORS
-- Hoặc dùng proxy để bypass CORS
+- Local server needs to enable CORS
+- Or use proxy to bypass CORS
 
 ### HTTPS vs HTTP:
-- Source URL có thể là HTTPS
-- Target URL thường là HTTP (localhost)
-- Extension sẽ handle việc này
+- Source URL can be HTTPS
+- Target URL is usually HTTP (localhost)
+- Extension will handle this
 
-## 📁 Cấu trúc file
+## 📁 File Structure
 
 ```
 ├── manifest.json          # Extension manifest
@@ -291,72 +306,72 @@ window.apiOverride.testProxy('https://api.example.com/users', 'GET')
 ├── background.js         # Background service worker
 ├── content.js            # Content script
 ├── injected.js           # Injected script
-├── demo.html             # Demo page để test
+├── demo.html             # Demo page for testing
 ├── icons/                # Extension icons
 ├── package.json          # Package configuration
-└── README.md             # Documentation này
+└── README.md             # This documentation
 ```
 
 ## 💡 Tips & Best Practices
 
 ### 1. Naming Convention:
-- Đặt tên proxy rõ ràng: "Users API Proxy"
-- Group theo feature: "Auth Proxy", "Data Proxy"
+- Use clear proxy names: "Users API Proxy"
+- Group by feature: "Auth Proxy", "Data Proxy"
 
 ### 2. Transform Functions:
-- Luôn validate input data
+- Always validate input data
 - Handle errors gracefully
-- Test transform functions trước khi save
+- Test transform functions before saving
 
 ### 3. Headers Management:
-- Không hardcode sensitive data
-- Sử dụng environment variables
-- Rotate tokens khi cần
+- Don't hardcode sensitive data
+- Use environment variables
+- Rotate tokens when needed
 
 ### 4. Performance:
-- Set delay phù hợp (0-100ms)
+- Set appropriate delay (0-100ms)
 - Monitor proxy performance
 - Disable unused proxies
 
 ### 5. Development Workflow:
-1. **Tạo proxy** → Cấu hình → **Save**
-2. **Test ngay** trên trang web
-3. **Điều chỉnh** transform functions nếu cần
-4. **Export config** để chia sẻ
+1. **Create proxy** → Configure → **Save**
+2. **Test immediately** on webpage
+3. **Adjust** transform functions if needed
+4. **Export config** to share
 
 ## 🎯 Use Cases
 
 ### 1. Frontend Development:
-- Redirect production APIs về localhost
-- Test với local data
+- Redirect production APIs to localhost
+- Test with local data
 - Develop offline
 
 ### 2. API Testing:
-- Test với different environments
+- Test with different environments
 - A/B testing APIs
-- Load testing với local server
+- Load testing with local server
 
 ### 3. Integration Testing:
-- Test integration với local services
+- Test integration with local services
 - Mock external APIs
 - Test error scenarios
 
-### 4. Development với Production APIs:
-- Redirect production APIs về localhost
-- Test với local changes
-- Develop mà không cần thay đổi code
+### 4. Development with Production APIs:
+- Redirect production APIs to localhost
+- Test with local changes
+- Develop without changing code
 
-## 📝 Lưu ý
+## 📝 Notes
 
-- Extension chỉ hoạt động trên các trang web thông thường (không phải chrome://)
-- Cần refresh trang web sau khi thay đổi cấu hình
-- URL pattern hỗ trợ wildcard `*` và regex cơ bản
-- Transform functions phải là JavaScript hợp lệ
+- Extension only works on regular web pages (not chrome://)
+- Need to refresh webpage after changing configuration
+- URL pattern supports wildcard `*` and basic regex
+- Transform functions must be valid JavaScript
 
 ## 📄 License
 
-MIT License - Sử dụng tự do cho mục đích cá nhân và thương mại.
+MIT License - Free to use for personal and commercial purposes.
 
 ---
 
-Với **API Mock Master**, bạn có thể redirect production APIs về localhost để development mà không cần thay đổi code! 🎭✨
+With **API Mock Master**, you can redirect production APIs to localhost for development without changing code! 🎭✨
