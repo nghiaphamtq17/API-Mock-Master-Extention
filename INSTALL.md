@@ -10,7 +10,7 @@
 ## Method 2: Manual Installation (Developer Mode)
 
 ### Step 1: Download Extension
-- Download `api-mock-master-extension.zip` from [GitHub Releases](https://github.com/your-username/api-mock-master/releases)
+- Download `api-mock-master-extension.zip` from [GitHub Releases](https://github.com/nghiaphamtq17/api-mock-master/releases)
 - Extract the ZIP file
 
 ### Step 2: Install in Chrome
@@ -41,7 +41,7 @@
 
 ## 📞 Support
 
-- **GitHub Issues**: [Report bugs and suggestions](https://github.com/your-username/api-mock-master/issues)
+- **GitHub Issues**: [Report bugs and suggestions](https://github.com/nghiaphamtq17/api-mock-master/issues)
 - **Documentation**: [README.md](README.md)
 
 ## 📄 License
